@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Food Calorie Estimator</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url("images/bg1.jpg") center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: linear-gradient(135deg, #ffffff, #f0f4ff);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+      width: 90%;
+      max-width: 650px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: #4a148c;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .drop-area {
+      border: 3px dashed #7c4dff;
+      background: #f8f7ff;
+      padding: 1.8rem;
+      border-radius: 15px;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      min-height: 220px;
+      color: #666;
+    }
+
+    .drop-area.dragover {
+      background: #e7e0ff;
+      border-color: #6200ea;
+      color: #000;
+    }
+
+    .drop-area img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      margin-top: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 1.2rem;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(to right, #7b1fa2, #512da8);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(123, 31, 162, 0.3);
+    }
+
+    #loading {
+      margin-top: 1.2rem;
+      display: none;
+    }
+
+    #loading i {
+      font-size: 2rem;
+      color: #7b1fa2;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #result {
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      color: #2c2c2c;
+      background: #e3f2fd;
+      padding: 1rem 1.2rem;
+      border-left: 6px solid #2196f3;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+      text-align: left;
+    }
+
+    #video {
+      width: 100%;
+      max-height: 250px;
+      border-radius: 12px;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    @media screen and (max-width: 500px) {
+      .btn-group {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .drop-area {
+        min-height: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav style="width: 100%;background:linear-gradient(135deg, #fffefe, #616761); color: rgb(87, 81, 81); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; left: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+    <div style="font-size: 1.5rem; font-weight: bold;">Calorie Estimator</div>
+    <div style="display: flex; gap: 1.5rem; font-size: 1rem;">
+      <a href="estimate.html" style="color: white; text-decoration: none;">Dashboard</a>
+      <a href="progress.html" style="color: white; text-decoration: none;">Progress</a>
+      <a href="previous.html" style="color: white; text-decoration: none;">Previous</a>
+      <a href="plans.html" style="color: white; text-decoration: none;">Plans</a>
+      <a href="profile.html" style="color: white; text-decoration: none;">Profile</a>
+    </div>
+  </nav>
+  <div style="position: absolute; top: 90px; right: 25px; z-index: 999;">
+    <a href="chatbot.html" style="color: #61006c; font-size: 1.5rem;">
+      <i class="fas fa-user"></i>
+    </a>
+  </div>
+  <div class="container">
+    <h1>🍽 AI Food Calorie Estimator</h1>
+
+    <div class="drop-area" id="dropArea">
+      <p>Drag & drop your food image here or use the buttons below</p>
+      <img id="previewImage" src="" alt="" style="display: none;" />
+    </div>
+
+    <video id="video" autoplay></video>
+
+    <div class="btn-group">
+      <button class="btn" onclick="document.getElementById('imageUpload').click();">Upload Image</button>
+      <input type="file" id="imageUpload" accept="image/*" style="display: none;" />
+      <button class="btn" onclick="startCamera()">Scan Food</button>
+    </div>
+
+    <div id="loading"><i class="fas fa-spinner"></i></div>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const dropArea = document.getElementById('dropArea');
+    const imageUpload = document.getElementById('imageUpload');
+    const previewImage = document.getElementById('previewImage');
+    const video = document.getElementById('video');
+    const loading = document.getElementById('loading');
+    const result = document.getElementById('result');
+
+    dropArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropArea.classList.add('dragover');
+    });
+
+    dropArea.addEventListener('dragleave', () => {
+      dropArea.classList.remove('dragover');
+    });
+
+    dropArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropArea.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        displayImage(file);
+      }
+    });
+
+    imageUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+        displayImage(file);
+      }
+    });
+
+    function displayImage(file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        previewImage.src = e.target.result;
+        previewImage.style.display = 'block';
+        analyzeImage();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function analyzeImage() {
+      loading.style.display = 'block';
+      result.innerHTML = '';
+
+      const base64Image = previewImage.src;
+      const blob = dataURLToBlob(base64Image);
+      const formData = new FormData();
+      formData.append("image", blob, "food.png");
+
+      fetch("http://127.0.0.1:5000/analyze", {
+        method: "POST",
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          loading.style.display = 'none';
+          if (data.result) {
+            result.innerHTML = data.result;
+            localStorage.setItem("previousMealsHTML", data.result);
+            
+          } else {
+            result.innerHTML = "Analysis failed. Please try again.";
+          }
+        })
+        .catch(error => {
+          loading.style.display = 'none';
+          result.innerHTML = "Error analyzing the image.";
+          console.error("Error:", error);
+        });
+    }
+
+    function dataURLToBlob(dataURL) {
+      const parts = dataURL.split(';base64,');
+      const contentType = parts[0].split(':')[1];
+      const byteCharacters = atob(parts[1]);
+      const byteArrays = [];
+
+      for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+        const slice = byteCharacters.slice(offset, offset + 512);
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+      }
+
+      return new Blob(byteArrays, { type: contentType });
+    }
+
+    function startCamera() {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          video.srcObject = stream;
+          video.style.display = 'block';
+
+          setTimeout(() => {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0);
+            const dataURL = canvas.toDataURL('image/png');
+            previewImage.src = dataURL;
+            previewImage.style.display = 'block';
+            video.srcObject.getTracks().forEach(track => track.stop());
+            video.style.display = 'none';
+            analyzeImage();
+          }, 2500);
+        })
+        .catch(err => {
+          alert("Camera access denied or not available.");
+        });
+    }
+  </script>
+</body>
+</html>

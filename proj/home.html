@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Food Calorie Estimator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5 rem;
+            color: #fff !important;
+        }
+
+        .nav-link {
+            color: #fff !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffdd57 !important;
+        }
+
+        .carousel img {
+            max-height: 650px;
+            object-fit: cover;
+            filter: brightness(0.8);
+        }
+
+        .carousel-caption {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .carousel-caption h3 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .carousel-caption p {
+            font-size: 1.2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .feature-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-text {
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            color: #555;
+        }
+
+        .footer {
+            background: #333;
+            color: #fff;
+            padding: 1rem ;
+            text-align: center;
+            margin-bottom: 0 rem;
+        }
+
+        .footer a {
+            color: #ffdd57;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">AI Calorie Estimator</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="home.html">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link" href="signup.html">SIGN UP</a></li>
+                
+                    <li class="nav-item"><a class="nav-link" href="about.html">ABOUT US</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+   
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item">
+                <img src="images/calorie estimation.webp" class="d-block w-100" alt="Calorie Estimation">
+                <div class="carousel-caption d-none d-md-block">
+                    <h3 class="animate__animated animate__fadeInDown">Calorie Estimation</h3>
+                    <p class="animate__animated animate__fadeInUp">Accurate calorie estimation using AI.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="images/nutrition breakdown.webp" class="d-block w-100" alt="Nutrition Breakdown">
+                <div class="carousel-caption d-none d-md-block">
+                    <h3 class="animate__animated animate__fadeInDown">Nutrition Breakdown</h3>
+                    <p class="animate__animated animate__fadeInUp">Detailed nutritional information.</p>
+                </div>
+            </div>
+            <div class="carousel-item active">
+                <img src="images/food analysis2.jpg" class="d-block w-100" alt="Food Analysis">
+                <div class="carousel-caption d-none d-md-block">
+                    <h3 class="animate__animated animate__fadeInDown">Food Analysis</h3>
+                    <p class="animate__animated animate__fadeInUp">AI-powered food recognition.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <section id="about" class="container mt-5">
+        <h2 class="section-title text-center">About the Project</h2>
+        <p class="text-center lead">An AI-powered calorie and nutrition estimator that uses deep learning to analyze food images and estimate their caloric and nutritional values. The system is a standalone web-based application that integrates AI models for food recognition and volume estimation. It will interact with a nutrient database to provide nutritional information. The application will be accessible via web browsers.</p>
+    </section>
+
+    <section id="features" class="container mt-5">
+        <h2 class="section-title text-center">Features</h2>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <img src="images/food analysis 1.webp" class="feature-image" alt="Instant Analysis">
+                <p class="feature-text">Instant food image analysis</p>
+            </div>
+            <div class="col-md-4">
+                <img src="images/c.webp" class="feature-image" alt="Calorie Breakdown">
+                <p class="feature-text">Accurate calorie & nutrition breakdown</p>
+            </div>
+            <div class="col-md-4">
+                <img src="images/food analysis.webp" class="feature-image" alt="Food Support">
+                <p class="feature-text">Supports various food types</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p>Email: Nutrify2025@gmail.com</p>
+            <p>&copy; 2025 AI Calorie Estimator. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

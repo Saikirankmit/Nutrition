@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nutrition Chatbot</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background:url("images/bg2.jpg")center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      border-radius: 2rem;
+    }
+
+    header {
+      background-color: #4a148c;
+      color: white;
+      padding: 0.8rem;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #chat-container {
+      flex: 1;
+      padding: 0.8rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .message {
+      max-width: 75%;
+      padding: 0.6rem 0.8rem;
+      border-radius: 12px;
+      white-space: pre-wrap;
+      font-size: 0.95rem;
+      position: relative;
+    }
+
+    .timestamp {
+      font-size: 0.7rem;
+      color: #666;
+      margin-top: 0.2rem;
+      text-align: right;
+    }
+
+    .user {
+      align-self: flex-end;
+      background-color: #d7c7f2;
+      color: #333;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      color: #222;
+    }
+
+    #input-container {
+      display: flex;
+      padding: 0.6rem;
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+    }
+
+    #userInput {
+      flex: 1;
+      padding: 0.5rem 0.8rem;
+      border: 1px solid #bbb;
+      border-radius: 10px;
+      font-size: 0.95rem;
+    }
+
+    #sendBtn {
+      margin-left: 0.6rem;
+      padding: 0.5rem 1rem;
+      background-color: #6a1b9a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #sendBtn:hover {
+      background-color: #4a148c;
+    }
+    #wrapper {
+        width: 90vh;
+        margin: 60px auto;
+        height: 95vh;
+        display: flex;
+        flex-direction: column;
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        background-color: #fafafa;
+      }
+      
+    .empty-message {
+      text-align: center;
+      color: #888;
+      font-style: italic;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<div id="wrapper">
+    <header>🍽️ Nutrition Assistant</header>
+
+    <div id="chat-container">
+      <div class="empty-message">Ask me about meals, calories, or healthy foods!</div>
+    </div>
+
+    <div id="input-container">
+      <input type="text" id="userInput" placeholder="Type your question..." />
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+<div id="chat-container">
+  <div class="empty-message">Ask me about meals, calories, or healthy foods!</div>
+</div>
+
+<script>
+  const chatContainer = document.getElementById('chat-container');
+  const userInput = document.getElementById('userInput');
+  const sendBtn = document.getElementById('sendBtn');
+
+  const getTime = () => {
+    const now = new Date();
+    return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
+  const appendMessage = (text, type) => {
+    const msg = document.createElement('div');
+    msg.classList.add('message', type);
+    msg.innerHTML = text.replace(/\n/g, "<br>");
+
+    const timestamp = document.createElement('div');
+    timestamp.classList.add('timestamp');
+    timestamp.textContent = getTime();
+    msg.appendChild(timestamp);
+
+    document.querySelector('.empty-message')?.remove(); // Remove placeholder
+    chatContainer.appendChild(msg);
+    chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
+  };
+
+  const sendMessage = async () => {
+    const question = userInput.value.trim();
+    if (!question) return;
+
+    appendMessage(question, 'user');
+    userInput.value = '';
+    userInput.focus();
+
+    appendMessage("Typing...", 'bot');
+    const typingElem = document.querySelector('.bot:last-child');
+    sendBtn.disabled = true;
+
+    try {
+      const response = await fetch('http://127.0.0.1:5000/chatbot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: question })
+      });
+
+      const data = await response.json();
+      typingElem.remove();
+      appendMessage(data.reply, 'bot');
+    } catch (error) {
+      typingElem.remove();
+      appendMessage("⚠️ Sorry, something went wrong.", 'bot');
+      console.error("Chatbot error:", error);
+    } finally {
+      sendBtn.disabled = false;
+    }
+  };
+
+  sendBtn.addEventListener('click', sendMessage);
+  userInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') sendMessage();
+  });
+
+  window.onload = () => userInput.focus();
+</script>
+
+</body>
+</html>

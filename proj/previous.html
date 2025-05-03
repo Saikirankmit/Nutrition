@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Previous Meals - Nutrify</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Nutrify</div>
+    <nav>
+      <a href="estimate.html">Dashboard</a>
+      <a href="progress.html">Progress</a>
+      <a href="previous.html">Previous</a>
+      <a href="plans.html">Plans</a>
+      <a href="profile.html" class="profile-btn">Profile</a>
+    </nav>
+  </header>
+
+  <main class="hero">
+    
+    <div class="info-section">
+      <h3>Chicken Salad</h3>
+      <div class="info-item"><span class="info-label">Calories:</span><span class="info-value">450 kcal</span></div>
+      <div class="info-item"><span class="info-label">Protein:</span><span class="info-value">30 g</span></div>
+      <div class="info-item"><span class="info-label">Carbs:</span><span class="info-value">20 g</span></div>
+      <div class="info-item"><span class="info-label">Fats:</span><span class="info-value">15 g</span></div>
+    </div>
+
+    <div class="cards" id="previousMealsContainer">
+      <!-- Cards will be populated here -->
+    </div>
+  </main>
+
+  <script>
+    const meals = JSON.parse(localStorage.getItem("previousMeals")) || [];
+
+    const container = document.getElementById("previousMealsContainer");
+
+    if (meals.length === 0) {
+      container.innerHTML = "<p>No previous meals found.</p>";
+    } else {
+      meals.forEach(meal => {
+        const card = document.createElement("div");
+        card.className = "info-section";
+        card.innerHTML = `
+          <h3>${meal.name}</h3>
+          <div class="info-item"><span class="info-label">Calories:</span><span class="info-value">${meal.calories} kcal</span></div>
+          <div class="info-item"><span class="info-label">Protein:</span><span class="info-value">${meal.protein} g</span></div>
+          <div class="info-item"><span class="info-label">Carbs:</span><span class="info-value">${meal.carbs} g</span></div>
+          <div class="info-item"><span class="info-label">Fats:</span><span class="info-value">${meal.fats} g</span></div>
+        `;
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
+

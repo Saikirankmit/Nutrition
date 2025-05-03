@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In Page</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: url("images/f5.jpeg") center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
+
+    .signin-container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .signin-container h2 {
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      color: #333;
+    }
+
+    .signin-form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus {
+      border-color: #6a11cb;
+      outline: none;
+    }
+
+    .toggle-btn {
+      position: absolute;
+      right: 10px;
+      top: 38px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #6a11cb;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .signin-button {
+      background: #6a11cb;
+      color: #fff;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .signin-button:hover {
+      background: #2575fc;
+    }
+
+    .signup-link {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .signup-link a {
+      color: #6a11cb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="signin-container">
+    <h2>Welcome Back!</h2>
+    <form class="signin-form" id="signin-form">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required />
+        <button type="button" class="toggle-btn" onclick="togglePassword()">Show</button>
+      </div>
+      <button type="submit" class="signin-button">Sign In</button>
+      <p class="signup-link">Don't have an account? <a href="signup.html">Sign up</a></p>
+      <div class="error-message" id="error-msg"></div>
+    </form>
+  </div>
+
+  <script>
+    let isPasswordVisible = false;
+
+    function togglePassword() {
+      const pw = document.getElementById("password");
+      const toggleBtn = document.querySelector(".toggle-btn");
+
+      isPasswordVisible = !isPasswordVisible;
+      pw.type = isPasswordVisible ? "text" : "password";
+      toggleBtn.textContent = isPasswordVisible ? "Hide" : "Show";
+    }
+
+    document.getElementById("signin-form").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const errorMsg = document.getElementById("error-msg");
+
+      try {
+        const res = await fetch("http://localhost:5000/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          localStorage.setItem("token", data.token);
+          window.location.href = data.redirectTo || "estimate.html";
+        } else {
+          errorMsg.textContent = data.message || "Invalid email or password.";
+        }
+      } catch (err) {
+        console.error("Login failed:", err);
+        errorMsg.textContent = "Server error. Please try again later.";
+      }
+
+      
+      document.getElementById("password").value = "";
+    });
+  </script>
+</body>
+</html>

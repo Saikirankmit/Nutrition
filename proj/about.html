@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(135deg, #6a11cb, #2168e3);
+      color: white;
+      padding: 2.5rem 1rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.8rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem 2rem;
+    }
+    .section {
+      margin-bottom: 3rem;
+    }
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      border-left: 5px solid #6a11cb;
+      padding-left: 1rem;
+    }
+    .abstract p {
+      line-height: 1.6;
+      font-size: 1.05rem;
+    }
+    .team {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .member {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 1.2rem;
+      max-width: 250px;
+      text-align: center;
+    }
+    .member img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 0.8rem;
+    }
+    .member h3 {
+      margin: 0.4rem 0 0.2rem;
+    }
+    .member p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .member a {
+      display: inline-block;
+      margin-top: 0.4rem;
+      color: #2575fc;
+      font-size: 0.85rem;
+      text-decoration: none;
+    }
+    .member a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #333;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>About Us</h1>
+</header>
+
+<div class="container">
+  <section class="section abstract">
+    <h2>Project Abstract</h2>
+    <p>
+      Our project is a practical and easy-to-use web application that helps users estimate the calorie and nutrient content of food just by uploading a picture. 
+      Using image recognition with a CNN model, the system identifies the food and compares it with a reliable database to provide nutritional details. 
+      It's built to support health-conscious individuals and fitness enthusiasts to track and manage their diet efficiently.
+    </p>
+  </section>
+
+  <section class="section team">
+    <h2>Our Team</h2>
+
+    <div class="member">
+      <img src="images/p1.jpeg" alt="Nithin" />
+      <h3>Nithin</h3>
+      <p>Project Lead </p>
+      <a href="#">LinkedIn</a>
+    </div>
+
+    <div class="member">
+      <img src="images/p2.jpeg" alt="Sai Kiran" />
+      <h3>Sai Kiran</h3>
+      <p>ML Engineer</p>
+      <a href="#">LinkedIn</a>
+    </div>
+
+    <div class="member">
+      <img src="images/p3.jpeg" alt="Nayan" />
+      <h3>Nayan</h3>
+      <p>Backend Developer</p>
+      <a href="#">LinkedIn</a>
+    </div>
+
+    <div class="member">
+      <img src="images/p4.jpeg" alt="Muthu" />
+      <h3>Muthu</h3>
+      <p>Frontend Designer</p>
+      <a href="#">LinkedIn</a>
+    </div>
+
+    <div class="member">
+      <img src="images/p5.jpeg" alt="Yakqub" />
+      <h3>Yakqub</h3>
+      <p>Data Analyst & Testing</p>
+      <a href="#">LinkedIn</a>
+    </div>
+
+  </section>
+</div>
+
+<footer>
+  &copy; 2025 NutriFY | Developed by our TEAM 18.
+</footer>
+
+</body>
+</html>

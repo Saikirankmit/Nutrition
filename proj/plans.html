@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Plans - Nutrify</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="plans.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Nutrify</div>
+    <nav>
+      <a href="estimate.html">Dashboard</a>
+      <a href="progress.html">Progress</a>
+      <a href="previous.html">Previous</a>
+      <a href="plans.html">Plans</a>
+      <a href="profile.html" class="profile-btn">Profile</a>
+    </nav>
+  </header>
+
+  <main class="hero">
+          <div class="cards">
+            <div class="card plan" onclick="selectPlan('weightLoss')">
+              <h3>Weight Loss</h3>
+              <p>Low calorie diet for fat loss</p>
+            </div>
+            <div class="card plan" onclick="selectPlan('weightGain')">
+              <h3>Weight Gain</h3>
+              <p>High calorie intake for healthy weight gain</p>
+            </div>
+            <div class="card plan" onclick="selectPlan('fitness')">
+              <h3>Fitness</h3>
+              <p>Low fat intake for lean maintenance</p>
+            </div>
+            <div class="card plan" onclick="selectPlan('muscle')">
+              <h3>Muscle Building</h3>
+              <p>High protein diet for muscle growth</p>
+            </div>
+          </div>
+        
+          <!-- Centered plan details card -->
+          <div class="center-wrapper">
+            <div id="planDetails" class="card" style="display: none; margin-top: 20px;"></div>
+          </div>
+        </main>
+        
+</body>
+</html>

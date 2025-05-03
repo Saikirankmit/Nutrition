@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Choose Your Plan</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url("images/f6.jpeg")center fixed;
+      background-size: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      max-width: 1000px;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #222;
+    }
+
+    .plans {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .plan {
+      background: linear-gradient(to bottom right, #6a11cb, #2575fc);
+      color: white;
+      border-radius: 10px;
+      padding: 2rem;
+      flex: 1 1 280px;
+      max-width: 320px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .plan:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .plan h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 0.5rem 0 1.5rem;
+    }
+
+    .features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem;
+      text-align: left;
+    }
+
+    .features li {
+      margin-bottom: 0.75rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .features li::before {
+      content: '✔';
+      position: absolute;
+      left: 0;
+      color: #a1f3a1;
+      font-weight: bold;
+    }
+
+    .select-btn {
+      background: #ffffff;
+      color: #6a11cb;
+      border: 2px solid #ffffff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .select-btn:hover {
+      background: #ffffff;
+      color: #2575fc;
+      border-color: #2575fc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Choose Your Plan</h1>
+    <div class="plans">
+      <div class="plan">
+        <h2>Pro Version</h2>
+        <p class="price">₹199 / month</p>
+        <ul class="features">
+          <li>Unlimited calorie estimations</li>
+          <li>Detailed nutrient breakdown</li>
+          <li>Save food logs</li>
+          <li>Weekly health reports</li>
+        </ul>
+        <a href="pro.html" class="select-btn">Select Pro</a>
+      </div>
+
+      <div class="plan">
+        <h2>Premium Version</h2>
+        <p class="price">₹499 / month</p>
+        <ul class="features">
+          <li>Everything in Pro</li>
+          <li>1-on-1 nutrition consultation</li>
+          <li>Personalized meal plans</li>
+          <li>Priority customer support</li>
+        </ul>
+        <a href="premium.html" class="select-btn">Select Premium</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

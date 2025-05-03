@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up Page</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: url("images/bg3.jpg") center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .signup-container {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 450px;
+      max-height: 90vh;
+      overflow-y: auto;
+      text-align: center;
+    }
+
+    .signup-container h2 {
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+      color: #333;
+    }
+
+    .signup-form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+      text-align: left;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    .toggle-btn {
+      position: absolute;
+      right: 10px;
+      top: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #6a11cb;
+      font-weight: bold;
+    }
+
+    .signup-button {
+      background: #6a11cb;
+      color: #fff;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 0.5rem;
+    }
+
+    .signup-button:hover {
+      background: #2575fc;
+    }
+
+    .login-link {
+      margin-top: 0.8rem;
+      font-size: 0.85rem;
+      color: #555;
+    }
+
+    .login-link a {
+      color: #6a11cb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    #message {
+      color: red;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>Create an Account</h2>
+    <form class="signup-form" onsubmit="submitForm(event)">
+      <div class="form-group">
+        <label for="username">Full Name</label>
+        <input type="text" id="username" name="username" placeholder="Enter your full name" required />
+      </div>
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" placeholder="Enter your age" min="10" max="100" required />
+      </div>
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender" required>
+          <option value="">Select your gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="weight">Weight (kg)</label>
+        <input type="number" id="weight" name="weight" min="30" max="200" placeholder="Enter your weight in kg" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required />
+        <button type="button" class="toggle-btn" onclick="togglePasswords()">Show</button>
+      </div>
+      <div class="form-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required />
+      </div>
+      <button type="submit" class="signup-button">Sign Up</button>
+      <p class="login-link">Already have an account? <a href="login.html">Log in</a></p>
+      <p id="message"></p>
+    </form>
+  </div>
+
+  <script>
+    let isPasswordVisible = false;
+
+    function togglePasswords() {
+      isPasswordVisible = !isPasswordVisible;
+      const passwordFields = [document.getElementById("password"), document.getElementById("confirm-password")];
+      const toggleBtn = document.querySelector(".toggle-btn");
+
+      passwordFields.forEach(field => {
+        field.type = isPasswordVisible ? "text" : "password";
+      });
+
+      toggleBtn.textContent = isPasswordVisible ? "Hide" : "Show";
+    }
+
+    async function submitForm(e) {
+      e.preventDefault();
+
+      const messageEl = document.getElementById("message");
+      messageEl.textContent = "";
+
+      const data = {
+        username: document.getElementById("username").value.trim(),
+        age: document.getElementById("age").value.trim(),
+        gender: document.getElementById("gender").value,
+        weight: document.getElementById("weight").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        password: document.getElementById("password").value.trim()
+      };
+
+      const confirmPassword = document.getElementById("confirm-password").value.trim();
+
+      if (data.password !== confirmPassword) {
+        messageEl.textContent = "Passwords do not match!";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://127.0.0.1:5000/api/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          alert("Signup successful!");
+          window.location.href = "login.html";
+        } else {
+          messageEl.textContent = result.message || "Signup failed.";
+        }
+      } catch (error) {
+        messageEl.textContent = "Server error. Please try again.";
+        console.error("Signup error:", error);
+      }
+    }
+  </script>
+</body>
+</html>
