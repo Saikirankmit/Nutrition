@@ -7,7 +7,7 @@ import io
 app = Flask(__name__)
 CORS(app)
 
-genai.configure(api_key="AIzaSyAGkTWovXeyZ5TBKchb9gv5xbU5yuKoQwo")  
+genai.configure(api_key="")  
 model = genai.GenerativeModel(model_name="gemini-1.5-pro")
 
 @app.route('/analyze', methods=['POST'])
